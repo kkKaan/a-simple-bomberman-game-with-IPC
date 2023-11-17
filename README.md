@@ -17,7 +17,7 @@ This project presents a C-based text Bomberman game leveraging inter-process com
 ## Compilation and Execution
 1. Clone the repository.
 2. Navigate to the project directory.
-3. Compile the game using the provided Makefile.
+3. Compile the game using the provided `Makefile`.
 4. Run the game with `./bgame`.
 
 ## Game Mechanics
