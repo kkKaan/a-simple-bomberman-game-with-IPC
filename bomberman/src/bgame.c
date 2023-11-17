@@ -215,7 +215,7 @@ Obstacle *find_obstacle_at_position(Maze *maze, int xx, int yy)
     return NULL;
 }
 
-void takeInputs(Maze** maze_ptr, Bomber*** bomber_data_ptr, int* num_bombers_ptr)
+void take_inputs(Maze** maze_ptr, Bomber*** bomber_data_ptr, int* num_bombers_ptr)
 {
     int width, height, num_obstacles, num_bombers;
     scanf(" %d %d %d %d \n", &width, &height, &num_obstacles, &num_bombers);
@@ -265,7 +265,7 @@ void takeInputs(Maze** maze_ptr, Bomber*** bomber_data_ptr, int* num_bombers_ptr
         (*bomber_data_ptr)[i] = bomber;
 
         // set the pipe_fd field for the bomber to -1 initially
-        // this will be updated later in the spawnBomberProcesses function
+        // this will be updated later in the spawn_bomber_processes function
         bomber->pipe_fd = -1;
     }
 
@@ -273,7 +273,7 @@ void takeInputs(Maze** maze_ptr, Bomber*** bomber_data_ptr, int* num_bombers_ptr
     *maze_ptr = maze;
 }
 
-void spawnBomberProcesses(Bomber **bombers, int num_bombers)
+void spawn_bomber_processes(Bomber **bombers, int num_bombers)
 {
     for (int i = 0; i < num_bombers; ++i)
     {
@@ -988,10 +988,10 @@ int main()
     int all_informed = 0;
 
     // read the input information about the game from standard input
-    takeInputs(&maze, &bombers, &num_bombers);
+    take_inputs(&maze, &bombers, &num_bombers);
 
     // fork the bomber processes, create pipes, and redirect standard input and output
-    spawnBomberProcesses(bombers, num_bombers);
+    spawn_bomber_processes(bombers, num_bombers);
 
     // set up pollfd structures for bombs and bombers
     struct pollfd *bomb_fds = (struct pollfd *)calloc(maze->num_bombs, sizeof(struct pollfd));
