@@ -1,4 +1,4 @@
-# Bomberman Game Project
+# Bomberman Game with IPC
 
 ## Overview
 This is a C program for a simple text-based Bomberman game. The game consists of a maze, where multiple players (bombers) can move, plant bombs, and attempt to eliminate each other. The last remaining player wins the game. For a detailed information check the PDF.
