@@ -23,7 +23,7 @@ This is a C program for a simple text-based Bomberman game. The game consists of
 - Player Elimination: If the explosion reaches a bomber, the bomber dies. Bombers can be eliminated by their own bomb explosions.
 
 ## Communication
-The communication between the controller and game entities (bombers and bombs) is carried out via bidirectional pipes, which allow data to flow in both directions. These pipes are created using the socketpair() function, ensuring that data written to one end can be read from the other.
+The communication between the controller and game entities (bombers and bombs) is carried out via bidirectional pipes, which allow data to flow in both directions. These pipes are created using the socketpair() macro, ensuring that data written to one end can be read from the other.
 
 ## Controller Logic
 The controller manages an arbitrary number of bombers and bombs. It creates and reads requests from multiple file descriptors, ensuring that it does not block on any socket. To achieve this, it can use system calls like select() or poll() to check if there is data to be read on a particular socket.
