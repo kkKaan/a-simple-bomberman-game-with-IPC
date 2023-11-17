@@ -66,7 +66,7 @@ typedef struct
 } Maze;
 
 // initialize maze
-Maze* mazeInit(int w, int h, int num_obstacles, int num_bombs, int num_bombers)
+Maze* maze_init(int w, int h, int num_obstacles, int num_bombs, int num_bombers)
 {
     Maze* maze = (Maze*)malloc(sizeof(Maze));
     maze->width = w;
@@ -111,7 +111,7 @@ Maze* mazeInit(int w, int h, int num_obstacles, int num_bombs, int num_bombers)
 }
 
 // destructor for maze
-void mazeFree(Maze* maze)
+void maze_free(Maze* maze)
 {
     if (maze == NULL) return;
 
@@ -156,7 +156,7 @@ void mazeFree(Maze* maze)
 }
 
 // check if the given position is valid, 0 -> empty, 1 -> obstacle, 2 -> bomber, 3 -> bomb, 5 -> a bomb and a bomber
-int mazeIsValidPosition(Maze* maze, int x, int y)
+int maze_is_valid_position(Maze* maze, int x, int y)
 {
     if (x < 0 || x >= maze->width || y < 0 || y >= maze->height || maze->maze[y][x] == 1 || maze->maze[y][x] == 2 || maze->maze[y][x] == 5)
     {
@@ -166,7 +166,7 @@ int mazeIsValidPosition(Maze* maze, int x, int y)
 }
 
 // damage an obstacle, if durability is 0, remove it from the maze
-void obstacleDamage(Maze* maze, Obstacle* obstacle)
+void obstacle_damage(Maze* maze, Obstacle* obstacle)
 {
     if (obstacle->durability > 0)
     {
@@ -220,7 +220,7 @@ void takeInputs(Maze** maze_ptr, Bomber*** bomber_data_ptr, int* num_bombers_ptr
     int width, height, num_obstacles, num_bombers;
     scanf(" %d %d %d %d \n", &width, &height, &num_obstacles, &num_bombers);
 
-    Maze *maze = mazeInit(width, height, num_obstacles, 0, num_bombers);
+    Maze *maze = maze_init(width, height, num_obstacles, 0, num_bombers);
 
     // read obstacles
     for (int i = 0; i < num_obstacles; ++i)
@@ -646,7 +646,7 @@ void handle_bomber_move(Maze *maze, int bomber_fd, int bomber_index, int target_
     int dy = abs(target_y - bomber->y);
 
     // check if the target position is valid and the move is a single step in a horizontal or vertical direction
-    if (mazeIsValidPosition(maze, target_x, target_y) && ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)))
+    if (maze_is_valid_position(maze, target_x, target_y) && ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)))
     {
         // update the maze
         maze->maze[bomber->y][bomber->x] -= 2;
@@ -857,7 +857,7 @@ void handle_bomb_explode(Maze *maze, Bomb *bomb)
         else if (maze->maze[bomb->y][bomb->x + i] == 1)
         {
             Obstacle *obstacle = find_obstacle_at_position(maze, bomb->x + i, bomb->y);
-            obstacleDamage(maze, obstacle);
+            obstacle_damage(maze, obstacle);
             break;
         }
         
@@ -883,7 +883,7 @@ void handle_bomb_explode(Maze *maze, Bomb *bomb)
         else if (maze->maze[bomb->y][bomb->x - i] == 1)
         {
             Obstacle *obstacle = find_obstacle_at_position(maze, bomb->x - i, bomb->y);
-            obstacleDamage(maze, obstacle);
+            obstacle_damage(maze, obstacle);
             break;
         }
     }
@@ -908,7 +908,7 @@ void handle_bomb_explode(Maze *maze, Bomb *bomb)
         else if (maze->maze[bomb->y + i][bomb->x] == 1)
         {
             Obstacle *obstacle = find_obstacle_at_position(maze, bomb->x, bomb->y + i);
-            obstacleDamage(maze, obstacle);
+            obstacle_damage(maze, obstacle);
             break;
         }
     }
@@ -933,7 +933,7 @@ void handle_bomb_explode(Maze *maze, Bomb *bomb)
         else if (maze->maze[bomb->y - i][bomb->x] == 1)
         {
             Obstacle *obstacle = find_obstacle_at_position(maze, bomb->x, bomb->y - i);
-            obstacleDamage(maze, obstacle);
+            obstacle_damage(maze, obstacle);
             break;
         }
     }
